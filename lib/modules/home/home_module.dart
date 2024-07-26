@@ -7,6 +7,7 @@ class HomeModule extends Module {
 
   @override
   void routes(r) {
-    r.child('/', child: (context) => HomePage());
+    r.child('/',
+        child: (context) => HomePage(), transition: TransitionType.fadeIn);
   }
 }

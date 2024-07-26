@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:todoocb/core/stores/todo_store.dart';
+
+var todoStore = TodoStore();
 
 class HomePage extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home Page Module')),
+      appBar: AppBar(title: Text('TODO OCB')),
       body: Center(
         child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () => Modular.to.navigate('/second/1'),
-              child: Text('Navigate to Second Page - id 1'),
-            ),
-            ElevatedButton(
-              onPressed: () => Modular.to.navigate('/second/2'),
-              child: Text('Navigate to Second Page - id 2'),
-            ),
-          ],
+          children: todoStore.todos
+              .map((todo) => ElevatedButton(
+                    onPressed: () =>
+                        Modular.to.pushNamed('/detalhe/${todo.id}'),
+                    child: Text(todo.titulo),
+                  ))
+              .toList(),
         ),
       ),
     );

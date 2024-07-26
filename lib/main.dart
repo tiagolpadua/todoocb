@@ -1,57 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:todoocb/modules/home/home_module.dart';
+import 'package:todoocb/modules/app_module.dart';
+import 'package:todoocb/modules/app_widget.dart';
 
 void main() {
   return runApp(ModularApp(module: AppModule(), child: AppWidget()));
-}
-
-class AppWidget extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'My Smart App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      routerConfig: Modular.routerConfig,
-    );
-  }
-}
-
-class AppModule extends Module {
-  @override
-  void binds(i) {}
-
-  @override
-  void routes(r) {
-    r.module('/', module: HomeModule());
-    r.child('/second/:id',
-        child: (_) => SecondPage(id: int.parse(r.args.params['id'])));
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({
-    super.key,
-    required this.id,
-  });
-
-  final int id;
-
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Second Page')),
-      body: Center(
-        child: Column(
-          children: [
-            Text("Detalhando id: $id"),
-            ElevatedButton(
-              onPressed: () => Modular.to.navigate('/'),
-              child: Text('Back to Home'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 // class MyApp extends StatelessWidget {
