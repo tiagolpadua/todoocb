@@ -12,16 +12,24 @@ mixin _$TodoStore on _TodoStore, Store {
   late final _$todosAtom = Atom(name: '_TodoStore.todos', context: context);
 
   @override
-  List<Todo> get todos {
+  ObservableList<Todo> get todos {
     _$todosAtom.reportRead();
     return super.todos;
   }
 
   @override
-  set todos(List<Todo> value) {
+  set todos(ObservableList<Todo> value) {
     _$todosAtom.reportWrite(value, super.todos, () {
       super.todos = value;
     });
+  }
+
+  late final _$fetchTodosAsyncAction =
+      AsyncAction('_TodoStore.fetchTodos', context: context);
+
+  @override
+  Future<void> fetchTodos() {
+    return _$fetchTodosAsyncAction.run(() => super.fetchTodos());
   }
 
   late final _$_TodoStoreActionController =
@@ -44,6 +52,17 @@ mixin _$TodoStore on _TodoStore, Store {
         _$_TodoStoreActionController.startAction(name: '_TodoStore.remove');
     try {
       return super.remove(id);
+    } finally {
+      _$_TodoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Todo getById(int id) {
+    final _$actionInfo =
+        _$_TodoStoreActionController.startAction(name: '_TodoStore.getById');
+    try {
+      return super.getById(id);
     } finally {
       _$_TodoStoreActionController.endAction(_$actionInfo);
     }
