@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todoocb/core/models/todo_model.dart';
 import 'package:todoocb/core/stores/todo_store.dart';
+import 'package:todoocb/modules/detalhe/card_todo.dart';
 
 class DetalhePage extends StatelessWidget {
   DetalhePage({
@@ -18,11 +19,11 @@ class DetalhePage extends StatelessWidget {
     var todo = todoStore.getById(id);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Detalhe')),
+      appBar: AppBar(title: Text(key: Key('foo'), 'Detalhe')),
       body: Center(
         child: Column(
           children: [
-            Text(todo.titulo),
+            CardTodo(todo: todo),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

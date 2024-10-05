@@ -9,24 +9,35 @@ class TodoStore = _TodoStore with _$TodoStore;
 abstract class _TodoStore with Store {
   var _dio = DioHelper().dio();
 
-  var _nextId = 3;
-
   @observable
-  var todos = ObservableList<Todo>.of([
-    Todo(id: 1, titulo: 'Estudar MobX AAA'),
-    Todo(id: 2, titulo: 'Estudar Flutter AAA'),
-  ]);
+  var todos = ObservableList<Todo>.of([]);
 
   @action
-  void add(String titulo) {
-    todos.add(Todo(id: _nextId, titulo: titulo));
-    _nextId++;
-    print("todos: $todos");
+  Future<void> add(String titulo) async {
+    var todo = Todo(id: _getNextId(), titulo: titulo);
+    await _dio.post("/todos", data: todo.toJson());
+    await fetchTodos();
+  }
+
+  int _getNextId() {
+    if (todos.isEmpty) {
+      return 1; // Se a lista estiver vazia, o próximo ID disponível é 1
+    }
+
+    // Extrair todos os IDs existentes
+    List<int> ids = todos.map((todo) => todo.id).toList();
+
+    // Encontrar o maior ID
+    int maxId = ids.reduce((curr, next) => curr > next ? curr : next);
+
+    // Retornar o próximo ID disponível
+    return maxId + 1;
   }
 
   @action
-  void remove(int id) {
-    todos.removeWhere((todo) => todo.id == id);
+  Future<void> remove(int id) async {
+    await _dio.delete("/todos/$id");
+    await fetchTodos();
   }
 
   @action

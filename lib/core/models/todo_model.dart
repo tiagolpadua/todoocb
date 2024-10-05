@@ -15,4 +15,11 @@ class Todo {
       titulo: json['titulo'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id.toString(),
+      'titulo': titulo,
+    };
+  }
 }

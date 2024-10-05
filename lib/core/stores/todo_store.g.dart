@@ -24,6 +24,21 @@ mixin _$TodoStore on _TodoStore, Store {
     });
   }
 
+  late final _$addAsyncAction = AsyncAction('_TodoStore.add', context: context);
+
+  @override
+  Future<void> add(String titulo) {
+    return _$addAsyncAction.run(() => super.add(titulo));
+  }
+
+  late final _$removeAsyncAction =
+      AsyncAction('_TodoStore.remove', context: context);
+
+  @override
+  Future<void> remove(int id) {
+    return _$removeAsyncAction.run(() => super.remove(id));
+  }
+
   late final _$fetchTodosAsyncAction =
       AsyncAction('_TodoStore.fetchTodos', context: context);
 
@@ -34,28 +49,6 @@ mixin _$TodoStore on _TodoStore, Store {
 
   late final _$_TodoStoreActionController =
       ActionController(name: '_TodoStore', context: context);
-
-  @override
-  void add(String titulo) {
-    final _$actionInfo =
-        _$_TodoStoreActionController.startAction(name: '_TodoStore.add');
-    try {
-      return super.add(titulo);
-    } finally {
-      _$_TodoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void remove(int id) {
-    final _$actionInfo =
-        _$_TodoStoreActionController.startAction(name: '_TodoStore.remove');
-    try {
-      return super.remove(id);
-    } finally {
-      _$_TodoStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   Todo getById(int id) {
