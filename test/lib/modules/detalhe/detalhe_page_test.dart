@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobx/mobx.dart' as mobx;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todoocb/core/models/todo_model.dart';
@@ -10,7 +11,6 @@ import 'package:todoocb/core/stores/todo_store.dart';
 
 import 'package:todoocb/modules/app_module.dart';
 import 'package:todoocb/modules/detalhe/detalhe_page.dart';
-
 import 'detalhe_page_test.mocks.dart';
 
 void main() {
@@ -29,7 +29,8 @@ void main() {
         titulo: 'Test Todo',
       );
 
-      when(mockTodoStore.getById(1)).thenReturn(todo);
+      var todos = mobx.ObservableList<Todo>.of([todo]);
+      when(mockTodoStore.todos).thenReturn(todos);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -39,12 +40,7 @@ void main() {
         ),
       );
 
-      await tester.pumpAndSettle();
-
-      // debugDumpApp();
-
-      // expect(find.text('Detalhe'), findsOneWidget);
-      expect(find.byKey(Key("foo")), findsOneWidget);
+      expect(find.text('Detalhe'), findsOneWidget);
       expect(find.text('Título:'), findsOneWidget);
       expect(find.text('Test Todo'), findsOneWidget);
       expect(find.text('Voltar'), findsOneWidget);
@@ -58,7 +54,9 @@ void main() {
         titulo: 'Test Todo',
       );
 
-      when(mockTodoStore.getById(1)).thenReturn(todo);
+      var todos = mobx.ObservableList<Todo>.of([todo]);
+
+      when(mockTodoStore.todos).thenReturn(todos);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -88,7 +86,8 @@ void main() {
         titulo: 'Test Todo',
       );
 
-      when(mockTodoStore.getById(1)).thenReturn(todo);
+      var todos = mobx.ObservableList<Todo>.of([todo]);
+      when(mockTodoStore.todos).thenReturn(todos);
 
       await tester.pumpWidget(
         MaterialApp(

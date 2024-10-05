@@ -27,8 +27,8 @@ mixin _$TodoStore on _TodoStore, Store {
   late final _$addAsyncAction = AsyncAction('_TodoStore.add', context: context);
 
   @override
-  Future<void> add(String titulo) {
-    return _$addAsyncAction.run(() => super.add(titulo));
+  Future<void> add(String newTodo) {
+    return _$addAsyncAction.run(() => super.add(newTodo));
   }
 
   late final _$removeAsyncAction =
@@ -45,20 +45,6 @@ mixin _$TodoStore on _TodoStore, Store {
   @override
   Future<void> fetchTodos() {
     return _$fetchTodosAsyncAction.run(() => super.fetchTodos());
-  }
-
-  late final _$_TodoStoreActionController =
-      ActionController(name: '_TodoStore', context: context);
-
-  @override
-  Todo getById(int id) {
-    final _$actionInfo =
-        _$_TodoStoreActionController.startAction(name: '_TodoStore.getById');
-    try {
-      return super.getById(id);
-    } finally {
-      _$_TodoStoreActionController.endAction(_$actionInfo);
-    }
   }
 
   @override

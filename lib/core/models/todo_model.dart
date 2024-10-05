@@ -2,12 +2,7 @@ class Todo {
   final int id;
   final String titulo;
 
-  const Todo({required this.id, required this.titulo});
-
-  @override
-  String toString() {
-    return 'Todo{id: $id, titulo: $titulo}';
-  }
+  Todo({required this.id, required this.titulo});
 
   factory Todo.fromJson(Map<String, dynamic> json) {
     return Todo(
@@ -21,5 +16,10 @@ class Todo {
       'id': id.toString(),
       'titulo': titulo,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Todo{id: $id, titulo: $titulo}';
   }
 }

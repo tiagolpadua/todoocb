@@ -21,8 +21,6 @@ void main() {
       ),
     );
 
-    // debugDumpApp();
-
     // Verify that the title is displayed correctly
     expect(find.text('Título:'), findsOneWidget);
     expect(find.text('Test Todo'), findsOneWidget);

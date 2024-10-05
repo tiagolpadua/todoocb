@@ -19,43 +19,54 @@ class _InclusaoPageState extends State<InclusaoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Inclusão de TODO')),
-      body: Form(
-        key: _formKey,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _tituloController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor insira um título';
-                    }
-                    return null;
-                  },
+      appBar: AppBar(title: Text('Novo Todo')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _tituloController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Forneça algum texto';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Digite o texto',
+                  border: OutlineInputBorder(),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      todoStore.add(_tituloController.text);
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('TODO incluído com sucesso!')),
-                      );
-
-                      Modular.to.pop();
-                    }
-                  },
-                  child: const Text('Salvar TODO'),
-                )
-              ],
-            ),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   const SnackBar(content: Text('Processing Data')),
+                    // );
+                    todoStore.add(_tituloController.text);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Todo incluído!')),
+                    );
+                    Modular.to.pop();
+                  }
+                },
+                child: const Text('Salvar'),
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _tituloController.dispose();
+    super.dispose();
   }
 }

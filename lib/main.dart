@@ -7,6 +7,7 @@ void main() {
   return runApp(ModularApp(module: AppModule(), child: AppWidget()));
 }
 
+
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 

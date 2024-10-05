@@ -2,7 +2,18 @@ import 'package:mobx/mobx.dart';
 import 'package:todoocb/core/helpers/dio_helper.dart';
 import 'package:todoocb/core/models/todo_model.dart';
 
+// import 'package:dio/dio.dart';
+
 part 'todo_store.g.dart';
+
+// final dio = Dio();
+
+// final options = BaseOptions(
+//   baseUrl: 'http://10.0.2.2:3000',
+//   connectTimeout: Duration(seconds: 5),
+//   receiveTimeout: Duration(seconds: 3),
+// );
+// final dio = Dio(options);
 
 class TodoStore = _TodoStore with _$TodoStore;
 
@@ -11,12 +22,43 @@ abstract class _TodoStore with Store {
 
   @observable
   var todos = ObservableList<Todo>.of([]);
+  // var todos = ObservableList<Todo>.of([
+  //   Todo(id: 1, titulo: 'Estudar MobX'),
+  //   Todo(id: 2, titulo: 'Estudar Flutter')
+  // ]);
 
   @action
-  Future<void> add(String titulo) async {
-    var todo = Todo(id: _getNextId(), titulo: titulo);
+  Future<void> add(String newTodo) async {
+    var id = _getNextId();
+    var todo = Todo(id: id, titulo: newTodo);
     await _dio.post("/todos", data: todo.toJson());
     await fetchTodos();
+  }
+
+  @action
+  Future<void> remove(int id) async {
+    await _dio.delete("/todos/$id");
+    await fetchTodos();
+    // todos.removeWhere((todo) => todo.id == id);
+  }
+
+  // @action
+  // void addRandom() {
+  //   add(WordPair.random().toString());
+  // }
+
+  @action
+  Future<void> fetchTodos() async {
+    // final response = await dio.get('http://localhost:3000/todos');
+    final response = await _dio.get('/todos');
+    // print("response $response");
+
+    // responseData.forEach((json) => print(json));
+    var todoList =
+        (response.data as List).map((json) => Todo.fromJson(json)).toList();
+    // print("todoList $todoList");
+    todos.clear();
+    todos.addAll(todoList);
   }
 
   int _getNextId() {
@@ -32,24 +74,5 @@ abstract class _TodoStore with Store {
 
     // Retornar o próximo ID disponível
     return maxId + 1;
-  }
-
-  @action
-  Future<void> remove(int id) async {
-    await _dio.delete("/todos/$id");
-    await fetchTodos();
-  }
-
-  @action
-  Todo getById(int id) {
-    return todos.firstWhere((todo) => todo.id == id);
-  }
-
-  @action
-  Future<void> fetchTodos() async {
-    final response = await _dio.get('/todos');
-    todos.clear();
-    var todosAPI = (response.data as List).map((json) => Todo.fromJson(json));
-    todos.addAll(todosAPI);
   }
 }

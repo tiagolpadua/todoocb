@@ -7,8 +7,8 @@ import 'dart:async' as _i5;
 
 import 'package:mobx/mobx.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:todoocb/core/models/todo_model.dart' as _i3;
-import 'package:todoocb/core/stores/todo_store.dart' as _i4;
+import 'package:todoocb/core/models/todo_model.dart' as _i4;
+import 'package:todoocb/core/stores/todo_store.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -45,35 +45,25 @@ class _FakeReactiveContext_1 extends _i1.SmartFake
         );
 }
 
-class _FakeTodo_2 extends _i1.SmartFake implements _i3.Todo {
-  _FakeTodo_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [TodoStore].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTodoStore extends _i1.Mock implements _i4.TodoStore {
+class MockTodoStore extends _i1.Mock implements _i3.TodoStore {
   @override
-  _i2.ObservableList<_i3.Todo> get todos => (super.noSuchMethod(
+  _i2.ObservableList<_i4.Todo> get todos => (super.noSuchMethod(
         Invocation.getter(#todos),
-        returnValue: _FakeObservableList_0<_i3.Todo>(
+        returnValue: _FakeObservableList_0<_i4.Todo>(
           this,
           Invocation.getter(#todos),
         ),
-        returnValueForMissingStub: _FakeObservableList_0<_i3.Todo>(
+        returnValueForMissingStub: _FakeObservableList_0<_i4.Todo>(
           this,
           Invocation.getter(#todos),
         ),
-      ) as _i2.ObservableList<_i3.Todo>);
+      ) as _i2.ObservableList<_i4.Todo>);
 
   @override
-  set todos(_i2.ObservableList<_i3.Todo>? value) => super.noSuchMethod(
+  set todos(_i2.ObservableList<_i4.Todo>? value) => super.noSuchMethod(
         Invocation.setter(
           #todos,
           value,
@@ -95,10 +85,10 @@ class MockTodoStore extends _i1.Mock implements _i4.TodoStore {
       ) as _i2.ReactiveContext);
 
   @override
-  _i5.Future<void> add(String? titulo) => (super.noSuchMethod(
+  _i5.Future<void> add(String? newTodo) => (super.noSuchMethod(
         Invocation.method(
           #add,
-          [titulo],
+          [newTodo],
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
@@ -113,28 +103,6 @@ class MockTodoStore extends _i1.Mock implements _i4.TodoStore {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
-
-  @override
-  _i3.Todo getById(int? id) => (super.noSuchMethod(
-        Invocation.method(
-          #getById,
-          [id],
-        ),
-        returnValue: _FakeTodo_2(
-          this,
-          Invocation.method(
-            #getById,
-            [id],
-          ),
-        ),
-        returnValueForMissingStub: _FakeTodo_2(
-          this,
-          Invocation.method(
-            #getById,
-            [id],
-          ),
-        ),
-      ) as _i3.Todo);
 
   @override
   _i5.Future<void> fetchTodos() => (super.noSuchMethod(

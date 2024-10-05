@@ -8,6 +8,6 @@ class InclusaoModule extends Module {
   @override
   void routes(r) {
     r.child('/',
-        child: (_) => InclusaoPage(), transition: TransitionType.fadeIn);
+        child: (_) => InclusaoPage(), transition: TransitionType.leftToRight);
   }
 }

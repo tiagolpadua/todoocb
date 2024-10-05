@@ -12,7 +12,8 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset("assets/images/ocb.png"),
+        child: Image.asset(
+            'assets/images/ocb.png'), // Ensure the image is added to your assets
       ),
     );
   }
